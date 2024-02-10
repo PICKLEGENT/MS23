@@ -3,99 +3,96 @@ import './App.css';
 import SearchBox from './components/SearchBox';
 import MovieListHeading from './components/MovieListHeading';
 import MovieList from './components/MovieList';
-import AddFavourites from './components/AddFavourites';
-import RemoveFavourites from './components/RemoveFavourites';
+import AddFavorites from './components/AddFavorites';
+import RemoveFavorites from './components/RemoveFavorites';
 
 function App() {
-    const [movies, setMovies] = useState([]);
-    const [favourites, setFavourites] = useState([]);
-    const [searchValue, setSearchValue] = useState('');
+	const [movies, setMovies] = useState([]);
+	const [favorites, setFavorites] = useState([]);
+	const [searchValue, setSearchValue] = useState('');
 
-    const getMovieRequest = async (searchValue) => {
-        const URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=8e167d12`;
+	const getMovieRequest = async (searchValue) => {
+		const URL = `http://www.omdbapi.com/?s=${searchValue}&apikey=8e167d12`;
 
-        const response = await fetch(URL);
-        const responseJson = await response.json();
+		const response = await fetch(URL);
+		const responseJson = await response.json();
 
-        if (responseJson.Search) {
-            setMovies(responseJson.Search);
-        }
-    };
+		if (responseJson.Search) {
+			setMovies(responseJson.Search);
+		}
+	};
 
-    useEffect(() => {
-        getMovieRequest(searchValue);
-    }, [searchValue]);
+	useEffect(() => {
+		getMovieRequest(searchValue);
+	}, [searchValue]);
 
-    useEffect(() => {
-        const movieFavourites = JSON.parse(
-            localStorage.getItem('react-movie-app-favourites')
-        );
+	useEffect(() => {
+		const movieFavorites = JSON.parse(
+			localStorage.getItem('react-movie-app-favorites')
+		);
 
-        if (movieFavourites) {
-            setFavourites(movieFavourites);
-        }
-    }, []);
+		if (movieFavorites) {
+			setFavorites(movieFavorites);
+		}
+	}, []);
 
-    const saveToLocalStorage = (items) => {
-        localStorage.setItem(
-            'react-movie-app-favourites',
-            JSON.stringify(items)
-        );
-    };
+	const saveToLocalStorage = (items) => {
+		localStorage.setItem('react-movie-app-favorites', JSON.stringify(items));
+	};
 
-    const addFavouriteMovie = (movie) => {
-        const newFavouriteList = [...favourites, movie];
-        setFavourites(newFavouriteList);
-        saveToLocalStorage(newFavouriteList);
-    };
+	const addFavoriteMovie = (movie) => {
+		const newFavoriteList = [...favorites, movie];
+		setFavorites(newFavoriteList);
+		saveToLocalStorage(newFavoriteList);
+	};
 
-    const removeFavouriteMovie = (movie) => {
-        const newFavouriteList = favourites.filter(
-            (favourite) => favourite.imdbID !== movie.imdbID
-        );
+	const removeFavoriteMovie = (movie) => {
+		const newFavoriteList = favorites.filter(
+			(favorite) => favorite.imdbID !== movie.imdbID
+		);
 
-        setFavourites(newFavouriteList);
-        saveToLocalStorage(newFavouriteList);
-    };
+		setFavorites(newFavoriteList);
+		saveToLocalStorage(newFavoriteList);
+	};
 
-    return (
-        <>
-            <div className='wrapper'>
-                <header>
-                    <div className='logo'>
-                        <h1>Movie Searcher</h1>
-                    </div>
-                    <SearchBox
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                    />
-                    <div className='brand-name'>
-                        <h1>AR23</h1>
-                    </div>
-                </header>
-                <div className='heading-container'>
-                    <MovieListHeading heading='Movies' />
-                </div>
-                <div className='row'>
-                    <MovieList
-                        movies={movies}
-                        handleFavouritesClick={addFavouriteMovie}
-                        favouriteComponent={AddFavourites}
-                    />
-                </div>
-                <div className='heading-container'>
-                    <MovieListHeading heading='Favourites' />
-                </div>
-                <div className='row'>
-                    <MovieList
-                        movies={favourites}
-                        handleFavouritesClick={removeFavouriteMovie}
-                        favouriteComponent={RemoveFavourites}
-                    />
-                </div>
-            </div>
-        </>
-    );
+	return (
+		<>
+			<div className='wrapper'>
+				<header>
+					<div className='logo'>
+						<h1>Movie Searcher</h1>
+					</div>
+					<SearchBox
+						searchValue={searchValue}
+						setSearchValue={setSearchValue}
+					/>
+					<div className='brand-name'>
+						<h1>AR23</h1>
+					</div>
+				</header>
+				<div className='heading-container'>
+					<MovieListHeading heading='Movies' />
+				</div>
+				<div className='row'>
+					<MovieList
+						movies={movies}
+						handleFavoritesClick={addFavoriteMovie}
+						favoriteComponent={AddFavorites}
+					/>
+				</div>
+				<div className='heading-container'>
+					<MovieListHeading heading='Favorites' />
+				</div>
+				<div className='row'>
+					<MovieList
+						movies={favorites}
+						handleFavoritesClick={removeFavoriteMovie}
+						favoriteComponent={RemoveFavorites}
+					/>
+				</div>
+			</div>
+		</>
+	);
 }
 
 export default App;

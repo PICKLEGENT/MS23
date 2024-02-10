@@ -1,32 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Bebas Neue', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Bebas Neue', sans-serif;
 }
 
 input,
 textarea,
 button {
-    outline: none;
+	outline: none;
 }
 
 ::-webkit-scrollbar {
-    width: 0.75em;
+	width: 0.75em;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: black;
+	background-color: black;
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 2px solid black;
-    border-radius: 8px;
-    background: linear-gradient(
-        32deg,
-        rgba(165, 74, 61, 1) 0%,
-        rgba(255, 205, 0, 1) 100%
-    );
+	border: 2px solid black;
+	border-radius: 8px;
+	background: linear-gradient(
+		32deg,
+		rgba(165, 74, 61, 1) 0%,
+		rgba(255, 205, 0, 1) 100%
+	);
 }
